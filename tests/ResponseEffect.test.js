@@ -46,14 +46,14 @@ test('sendHead uses 200 as response status if no status is specified in the inpu
 
 test('sendContent triggers responseHook.end side effect and outputs Success(responseHook) on success.', () => {
   const result = lib.sendContent(responseHook)(response);
-  expect(result.isRight()).toEqual(true);
+  expect(result.isSuccess()).toEqual(true);
   expect(result.value).toEqual(response);
   expect(end).toEqual('Not Found');
 });
 
 test('sendContent triggers responseHook.end side effect and outputs Failure(string) on fail.', () => {
   const result = lib.sendContent(responseHookError)(response);
-  expect(result.isLeft()).toEqual(true);
+  expect(result.isFailure()).toEqual(true);
   expect(result.value).toEqual('I failed :(');
 });
 

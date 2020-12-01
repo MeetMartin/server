@@ -5,9 +5,9 @@ import requestHook, {requestHookPost} from './mocks/requestHook';
 
 test('parseJSON parses into String to JSON returning Either functor with the result', () => {
   const json = lib.parseJSON('{"a":"b"}');
-  expect(json.isRight()).toBe(true);
+  expect(json.isSuccess()).toBe(true);
   expect(json.value.a).toBe('b');
-  expect(lib.parseJSON(':(').isLeft()).toBe(true);
+  expect(lib.parseJSON(':(').isFailure()).toBe(true);
 });
 
 test('logRequest uses logger for debug log of request method and url.', () => {

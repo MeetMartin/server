@@ -20,7 +20,7 @@ const getRequestObject = configuration => requestHook => ({
   data: isNothing(requestHook.data)
     ? undefined
     : (json =>
-        json.isLeft()
+        json.isFailure()
           ? queryString.parse(requestHook.data)
           : json.value
     )(parseJSON(requestHook.data))
