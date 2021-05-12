@@ -7,10 +7,11 @@ import fs from "fs";
  * getHeaders creates headers object out of response object.
  * getHeaders uses text/plain content type if content-type is not specified.
  */
-const getHeaders = response => ({
+const getHeaders = response => (headers => ({
+  ...headers,
   'content-type': response.contentType || 'text/plain',
   'content-length': response.contentLength || Buffer.byteLength(response.content)
-});
+}))((({configuration, data, contentType, contentLength, content, file, method, path, status, ...headers}) => headers)(response)); // remove unwanted properties
 
 /**
  * sendHead :: object -> object -> Either

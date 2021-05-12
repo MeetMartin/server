@@ -61,6 +61,7 @@ const rawGetApiEffect = request =>
         : request.configuration.apiError.any({...request, status: 404}) // call api for 404 error
   )
   (MaybeRoute(request));
+// TODO: add some automated response for OPTIONS request method
 
 /**
  * memory :: object

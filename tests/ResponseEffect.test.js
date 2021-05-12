@@ -15,6 +15,18 @@ test('getHeaders creates headers object out of response object.', () => {
   expect(lib.getHeaders(response2)).toEqual({'content-type': 'application/json', 'content-length': 7});
 });
 
+test('getHeaders creates headers object out of response object including any additional headers.', () => {
+  expect(lib.getHeaders(response)).toEqual({'content-type': 'text/plain', 'content-length': 9});
+  const response2 = {
+    ...response,
+    contentType: 'application/json',
+    contentLength: 7,
+    allow: 'OPTION, HEAD, GET, POST',
+    'Access-Control-Allow-Origin': 'http://localhost:8080',
+  };
+  expect(lib.getHeaders(response2)).toEqual({'content-type': 'application/json', 'content-length': 7, 'allow': 'OPTION, HEAD, GET, POST', 'Access-Control-Allow-Origin': 'http://localhost:8080'});
+});
+
 test('getHeaders uses text/plain content type if content-type is not specified.', () => {
   const response2 = {
     content: 'Success'
