@@ -43,6 +43,15 @@ test('Server outputs not found based on routing.', async () => {
   expect(response.text).toEqual('Not Found');
 });
 
+test('Server responds to options request with all headers.', async () => {
+  app = Server.start(configuration);
+
+  const response = await request(app).options('/options');
+  expect(response.status).toEqual(204);
+  expect(response.headers['allow']).toEqual('OPTIONS');
+  expect(response.headers['access-control-allow-origin']).toEqual('http://localhost:8080');
+});
+
 test('Server outputs result for post based on routing.', async () => {
   app = Server.start(configuration);
 

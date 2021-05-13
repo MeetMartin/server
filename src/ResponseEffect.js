@@ -10,7 +10,7 @@ import fs from "fs";
 const getHeaders = response => (headers => ({
   ...headers,
   'content-type': response.contentType || 'text/plain',
-  'content-length': response.contentLength || Buffer.byteLength(response.content)
+  'content-length': response.contentLength || Buffer.byteLength(response.content || '')
 }))((({configuration, data, contentType, contentLength, content, file, method, path, status, ...headers}) => headers)(response)); // remove unwanted properties
 
 /**

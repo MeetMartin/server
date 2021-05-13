@@ -58,10 +58,24 @@ const apiFile = path => ({
       ...request,
       status: 200,
       file: path,
-      contentType: 'text/htnl',
+      contentType: 'text/html',
       contentLength: 25
     }))
 });
+
+const apiOptions = {
+  options: request =>
+    AsyncEffect.of((_, resolve) => resolve({
+      ...request,
+      status: 204,
+      allow: 'OPTIONS',
+      'Access-Control-Allow-Origin': 'http://localhost:8080',
+      'Access-Control-Request-Method': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',
+      'Origin': 'http://localhost:8080'
+    }))
+};
 
 const configuration = {
   options: {
@@ -77,6 +91,10 @@ const configuration = {
     {
       path: '/path',
       api: apiPath
+    },
+    {
+      path: '/options',
+      api: apiOptions
     },
     {
       path: '/star/*',
