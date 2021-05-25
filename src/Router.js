@@ -71,23 +71,24 @@ const rawGetApiEffect = request =>
 let memory = {};
 
 /**
- * memoizedGetApiEffect :: object -> object -> AsyncEffect
+ * memoizedApiEffect :: object -> object -> AsyncEffect
  */
-const memoizedGetApiEffect = memory => request =>
+const memoizedApiEffect = memory => request =>
   (key =>
     key in memory
       ? memory[key]
       : (passThrough(result => memory[key] = result))
         (rawGetApiEffect(request))
   )
-  (request.path + ' ' + request.method);
+  (request.path + ' ' + request.method + JSON.stringify(request.data));
+  // TODO: think about using it based on some configuration
 
 /**
  * getApiEffect :: object -> AsyncEffect
  *
- * getApiEffect is memoized version of rawGetApiEffect
+ * getApiEffect uses rawGetApiEffect
  */
-const getApiEffect = memoizedGetApiEffect(memory);
+const getApiEffect = rawGetApiEffect;
 
 export default {getApiEffect};
 
@@ -96,6 +97,6 @@ export {
   MaybeRoute,
   emptyContent,
   rawGetApiEffect,
-  memoizedGetApiEffect,
+  memoizedApiEffect,
   memory
 };

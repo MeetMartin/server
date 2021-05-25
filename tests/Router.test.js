@@ -56,6 +56,50 @@ test('emptyContent maps AsyncEffect evaluating contentLength and making file and
   });
 });
 
+test('rawGetApiEffect outputs AsyncEffect with the response to a request based on a route.', done => {
+  lib.rawGetApiEffect({
+    ...request,
+    path: '/path',
+    method: 'get'
+  }).trigger(identity, response => {
+    expect(response.content).toEqual('get path result');
+    done();
+  });
+});
+
+test('rawGetApiEffect outputs reaches correct data based on POST request.', done => {
+  lib.rawGetApiEffect({
+    ...request,
+    path: '/post',
+    method: 'post',
+    data: {arg: 'mytestArg'} 
+  }).trigger(error => console.log('my error',error), response => {
+    expect(response.content).toEqual("{\"arg\":\"mytestArg\"}");
+    done();
+  });
+});
+
+test('memoizedApiEffect outputs reaches correct data based on POST request with correct memoization.', done => {
+  let memory = {};
+  lib.memoizedApiEffect(memory)({
+    ...request,
+    path: '/post',
+    method: 'post',
+    data: {arg: 'mytestArg'} 
+  }).trigger(error => console.log('my error',error), response => {
+    expect(response.content).toEqual("{\"arg\":\"mytestArg\"}");
+    lib.memoizedApiEffect(memory)({
+      ...request,
+      path: '/post',
+      method: 'post',
+      data: {arg: 'mytestArg2'} 
+    }).trigger(error => console.log('my error',error), response => {
+      expect(response.content).toEqual("{\"arg\":\"mytestArg2\"}");
+      done();
+    });
+  });
+});
+
 test('getApiEffect outputs AsyncEffect with the response to a request based on a route.', done => {
   Router.getApiEffect({
     ...request,
@@ -151,5 +195,25 @@ test('getApiEffect outputs AsyncEffect of 404 api call if both requested method 
     expect(response.status).toEqual(404);
     expect(response.content).toEqual('Not Found');
     done();
+  });
+});
+
+test('getApiEffect outputs reaches correct data based on POST request without wrong caching.', done => {
+  Router.getApiEffect({
+    ...request,
+    path: '/post',
+    method: 'post',
+    data: {arg: 'mytestArg'} 
+  }).trigger(error => console.log('my error',error), response => {
+    expect(response.content).toEqual("{\"arg\":\"mytestArg\"}");
+    Router.getApiEffect({
+      ...request,
+      path: '/post',
+      method: 'post',
+      data: {arg: 'mytestArg2'} 
+    }).trigger(error => console.log('my error',error), response => {
+      expect(response.content).toEqual("{\"arg\":\"mytestArg2\"}");
+      done();
+    });
   });
 });
