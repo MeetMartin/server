@@ -25,6 +25,9 @@ test('getRequestObject extracts request data from input requestHook and outputs 
     configuration: configuration,
     path: '/path',
     method: 'get',
+    headers: {
+      "Connection": "keep-alive"
+    },
     data: undefined
   });
   expect(lib.getRequestObject(configuration)(requestHookPost)).toEqual({
@@ -39,7 +42,7 @@ test('RequestEffect(object)(object).trigger(d -> e, f -> g) for GET requestHook 
   RequestEffect(requestHook)(configuration).trigger(error => error, result => {
     expect(result).toEqual({
       configuration: configuration,
-      "data": undefined, "method": "get", "path": "/path"
+      "data": undefined, "method": "get", "path": "/path", "headers": { "Connection": "keep-alive" }
     });
     done();
   });

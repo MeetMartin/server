@@ -17,6 +17,7 @@ const getRequestObject = configuration => requestHook => ({
   configuration: configuration,
   path: requestHook.url,
   method: lowerCaseOf(requestHook.method),
+  headers: requestHook.headers,
   data: isNothing(requestHook.data)
     ? undefined
     : (json =>

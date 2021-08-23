@@ -6,7 +6,10 @@ const requestHook = {
   url: '/path',
   method: 'GET',
   data: undefined,
-  on: onFunction
+  on: onFunction,
+  headers: {
+    "Connection": "keep-alive"
+  }
 };
 
 export const requestHook404 = {

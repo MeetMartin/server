@@ -46,7 +46,7 @@ const emptyContent = ApiEffect =>
  */
 const rawGetApiEffect = request =>
   maybe
-  (request.configuration.apiError.any({...request, status: 404}))
+  (() => request.configuration.apiError.any({...request, status: 404}))
   (route =>
     isFunction(route.api[request.method]) // is there api call for the request method?
       ? route.api[request.method](request) // call api for the request method

@@ -5,7 +5,7 @@ import {AsyncEffect} from "@7urtle/lambda";
 
 const apiRoot = {
   post: () => AsyncEffect.of((reject, _) => reject(501)),
-  patch: () => AsyncEffect.of((_, resolve) => throw Error('I am a sad tortoise :(')),
+  patch: () => AsyncEffect.of((_, resolve) => { throw Error('I am a sad tortoise :(') }),
   any: request =>
     AsyncEffect.of((_, resolve) => resolve({
       ...request,
@@ -18,7 +18,7 @@ const apiRoot = {
 const apiPath = {
   get: request =>
     AsyncEffect.of((_, resolve) => resolve({
-      ...request,
+      //...request,
       status: 200,
       contentType: 'text/plain',
       content: 'get path result'
