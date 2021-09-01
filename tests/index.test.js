@@ -111,6 +111,14 @@ test('Server outputs result based on star routing.', async () => {
   expect(response.text).toEqual('I am a star');
 });
 
+test('Server returns headers from routing result.', async () => {
+  app = Server.start(configuration);
+
+  const response = await request(app).get('/redirect');
+  expect(response.status).toEqual(301);
+  expect(response.headers['location']).toEqual('https://www.7urtle.com');
+});
+
 test('Server outputs result for post form request based on routing.', async () => {
   app = Server.start(configuration);
 

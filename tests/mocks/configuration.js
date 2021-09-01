@@ -15,6 +15,16 @@ const apiRoot = {
     }))
 };
 
+const redirectPath = {
+  get: () =>
+    AsyncEffect.of(_ => resolve => resolve({
+      status: 301,
+      headers: {
+        location: 'https://www.7urtle.com'
+      }
+    }))
+};
+
 const apiPath = {
   get: request =>
     AsyncEffect.of((_, resolve) => resolve({
@@ -107,6 +117,10 @@ const configuration = {
     {
       path: '/file.html',
       api: apiFile('./tests/mocks/static.html')
+    },
+    {
+      path: '/redirect',
+      api: redirectPath
     }
   ],
 };

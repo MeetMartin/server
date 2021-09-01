@@ -9,9 +9,11 @@ import fs from "fs";
  */
 const getHeaders = response => (headers => ({
   ...headers,
+  ...response.headers,
   'content-type': response.contentType || 'text/plain',
   'content-length': response.contentLength || Buffer.byteLength(response.content || '')
-}))((({configuration, data, contentType, contentLength, content, file, method, path, status, ...headers}) => headers)(response)); // remove unwanted properties
+}))((({configuration, data, contentType, contentLength, content, file, method, path, status, headers, ...objectData}) => objectData)(response)); // remove unwanted properties
+// TODO: we should use headers for headers, not be mixing it like this. Headers belong under headers object in the response.
 
 /**
  * sendHead :: object -> object -> Either
