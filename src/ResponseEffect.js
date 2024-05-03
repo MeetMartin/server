@@ -1,4 +1,4 @@
-import {passThrough, isJust, Either, either, identity, AsyncEffect} from "@7urtle/lambda";
+import {passThrough, isJust, Either, either, identity, AsyncEffect, spy} from "@7urtle/lambda";
 import fs from "fs";
 
 /**
@@ -11,7 +11,7 @@ const getHeaders = response => (headers => ({
   ...headers,
   ...response.headers,
   'content-type': response.contentType || 'text/plain',
-  'content-length': response.contentLength || Buffer.byteLength(response.content || '')
+  'content-length': response.contentLength || Buffer.byteLength(response.content || response.body || '')
 }))((({configuration, data, contentType, contentLength, content, file, method, path, status, headers, ...objectData}) => objectData)(response)); // remove unwanted properties
 // TODO: we should use headers for headers, not be mixing it like this. Headers belong under headers object in the response.
 
@@ -37,7 +37,12 @@ const sendHead = responseHook => response =>
 const sendContent = responseHook => response =>
   Either.try(() =>
     passThrough(
-      response => isJust(response.content) ? responseHook.end(response.content) : responseHook.end()
+      response =>
+        isJust(response.content)
+        ? responseHook.end(response.content)
+        : isJust(response.body)
+        ? responseHook.end(response.body)
+        : responseHook.end()
     )(response)
   );
 

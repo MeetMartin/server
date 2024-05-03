@@ -67,6 +67,17 @@ test('rawGetApiEffect outputs AsyncEffect with the response to a request based o
   });
 });
 
+test('Unicode works.', done => {
+  lib.rawGetApiEffect({
+    ...request,
+    path: '/unicode',
+    method: 'get'
+  }).trigger(identity, response => {
+    expect(response.body).toEqual({horse: 'Příliš žluťoučký kůň úpěl ďábelské ódy'});
+    done();
+  });
+});
+
 test('rawGetApiEffect outputs reaches correct data based on POST request.', done => {
   lib.rawGetApiEffect({
     ...request,

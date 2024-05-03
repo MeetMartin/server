@@ -137,6 +137,17 @@ test('Server outputs result for post json request based on routing.', async () =
   expect(response.text).toEqual('{"animal1":"turtle","animal2":"tortoise"}');
 });
 
+test('Server outputs unicode in json.', async () => {
+  app = Server.start(configuration);
+
+  const response = await request(app).get('/unicode2');
+  console.log(response);
+  expect(response.status).toEqual(200);
+  expect(response.headers['content-type']).toEqual('application/json');
+  expect(JSON.parse(response.text)).toEqual({horse: 'Příliš žluťoučký kůň úpěl ďábelské ódy'});
+});
+
+
 test('Server outputs result for error api if error is thrown unexpectedly in async api.', async () => {
   app = Server.start(configuration);
 

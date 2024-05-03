@@ -4,7 +4,7 @@ import Server, * as lib from '../src/Server';
 import loggerConfiguration from './mocks/loggerConfiguration';
 import {configuration, configurationWithListeners} from './mocks/configuration';
 import responseHook, {end, head} from './mocks/responseHook';
-import requestHook from "./mocks/requestHook";
+import requestHook, {requestHookUnicode} from "./mocks/requestHook";
 import createLogger from "@7urtle/logger";
 
 let server = null;
@@ -59,8 +59,10 @@ test('getServer listens for errors.', done => {
       }
     }
   };
-  server = lib.getServer(configuration2);
+  server = lib.getServer(configurationWithListeners);
+  server2 = lib.getServer(configuration2);
   request(server).get('/');
+  request(server2).get('/');
 });
 
 test('create adds listeners to configuration and creates a listening http.Server.', async () => {
@@ -158,4 +160,15 @@ test('requestListener uses configuration to resolve request from requestHook by 
     "status": 200
   });
   expect(end).toBe('get path result');
+});
+
+test('requestListener work with unicode.', () => {
+  lib.requestListener(configuration)(requestHookUnicode, responseHook);
+  /*expect(head).toEqual({
+    "headers": {
+      "content-length": 15, "content-type": "application/json"
+    },
+    "status": 200
+  });*/
+  expect(end).toEqual({horse: 'Příliš žluťoučký kůň úpěl ďábelské ódy'});
 });

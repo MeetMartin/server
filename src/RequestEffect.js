@@ -48,6 +48,7 @@ const RequestEffect = requestHook => configuration =>
   AsyncEffect.of(
     async (reject, resolve) => {
       requestHook.data = '';
+      //requestHook.setEncoding('utf8');
       requestHook.on('data',
         input => {
           configuration.logger.debug('Receiving data on request.');

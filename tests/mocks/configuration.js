@@ -42,6 +42,26 @@ const apiPath = {
     }))
 };
 
+const apiUnicode = {
+  any: request =>
+    AsyncEffect.of((_, resolve) => resolve({
+      ...request,
+      status: 200,
+      contentType: 'application/json',
+      body: {horse: 'Příliš žluťoučký kůň úpěl ďábelské ódy'}
+    }))
+};
+
+const apiUnicode2 = {
+  any: request =>
+    AsyncEffect.of((_, resolve) => resolve({
+      ...request,
+      status: 200,
+      contentType: 'application/json',
+      content: JSON.stringify({horse: 'Příliš žluťoučký kůň úpěl ďábelské ódy'})
+    }))
+};
+
 const apiStar = {
   any: request =>
     AsyncEffect.of((_, resolve) => resolve({
@@ -101,6 +121,14 @@ const configuration = {
     {
       path: '/path',
       api: apiPath
+    },
+    {
+      path: '/unicode',
+      api: apiUnicode
+    },
+    {
+      path: '/unicode2',
+      api: apiUnicode2
     },
     {
       path: '/options',

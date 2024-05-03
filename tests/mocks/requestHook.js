@@ -12,6 +12,16 @@ const requestHook = {
   }
 };
 
+export const requestHookUnicode = {
+  url: '/unicode',
+  method: 'GET',
+  data: undefined,
+  on: onFunction,
+  headers: {
+    "Connection": "keep-alive"
+  }
+};
+
 export const requestHook404 = {
   url: '/404',
   method: 'POST',
