@@ -1,5 +1,5 @@
 import {AsyncEffect, Either, lowerCaseOf, isNothing, upperCaseOf} from "@7urtle/lambda";
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 
 /**
  * parseJSON :: String -> Either

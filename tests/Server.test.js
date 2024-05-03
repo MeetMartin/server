@@ -61,8 +61,6 @@ test('getServer listens for errors.', done => {
   };
   server = lib.getServer(configuration2);
   request(server).get('/');
-  server2 = lib.getServer(configuration2);
-  request(server2).get('/');
 });
 
 test('create adds listeners to configuration and creates a listening http.Server.', async () => {

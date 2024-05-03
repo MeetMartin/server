@@ -1,0 +1,10 @@
+{
+  "collectCoverage": true,
+  "verbose": true,
+  "collectCoverageFrom": [
+    "src/*",
+    "src/**/*"
+  ],
+  "testEnvironment": "jest-environment-node",
+  "transform": {}
+}

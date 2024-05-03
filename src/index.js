@@ -1,7 +1,7 @@
 import createLogger from "@7urtle/logger";
-import Server from "./Server";
-import apiError from "./apis/apiError";
-import apiFile from "./apis/apiFile";
+import Server from "./Server.js";
+import apiError from "./apis/apiError.js";
+import apiFile from "./apis/apiFile.js";
 
 const defaultConfiguration = {
   options: {

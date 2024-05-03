@@ -1,8 +1,8 @@
 import http from "http";
 import {compose, isEqual, isNumber, identity} from "@7urtle/lambda";
-import RequestEffect from "./RequestEffect";
-import ResponseEffect from "./ResponseEffect";
-import Router from "./Router";
+import RequestEffect from "./RequestEffect.js";
+import ResponseEffect from "./ResponseEffect.js";
+import Router from "./Router.js";
 
 /**
  * getServer :: object -> http.Server
